@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Books</h1>
+    {% for book in books %}
+        <ul>
+            <li><a href="/product/books/{{ book.pk }}">ketab {{ book.title }} {{ book.year }}</a></li>
+        </ul>
+    {% endfor %}
+</body>
+</html>

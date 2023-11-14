@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>{{ book.title }}</h1>
+    <h3>{{ book.year }}</h3>
+    <h3>{{ book.create_date }}</h3>
+    <h2>categories:</h2>
+    <ul>
+        {% for category in book.categories.all %}
+            <li><a href="/product/category/{{category.pk}}/">{{ category.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <h2>publisher:</h2>
+        <a href="/product/publisher/{{book.publisher.pk}}/">{{ book.publisher.title }}</a>
+
+</body>
+</html>

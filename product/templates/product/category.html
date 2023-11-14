@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>category</h1>
+<h1>{{ category.title }}</h1>
+   <h2>categories:</h2>
+    <ul>
+        {% for book in category.books.all %}
+            <li><a href="/product/books/{{ book.pk }}">ketab {{ book.title }} {{ book.year }}</a></li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
