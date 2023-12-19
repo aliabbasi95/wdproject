@@ -1,0 +1,50 @@
+{% block content %}
+    <h2>سفارش</h2>
+    <ul>
+        {% for order in orders %}
+            <h3> ORDER </h3>
+            {% for book_count in order.order_book_count.all %}
+            <li>
+                {{ book_count.book.title }} - {{ book_count.book.price }}
+                <p>count : {{ book_count.count }}</p>
+            </li>
+            {% endfor %}
+            <p>sum: {{ order.total_price }}</p>
+            <button class="finalize-order" data-order-id="{{ order.id }}">نهایی کردن سفارش</button>
+        {% endfor %}
+
+    </ul>
+{% endblock %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        console.log(0)
+        $('.finalize-order').click(function() {
+            var orderId = $(this).data('order-id');
+            console.log(1)
+            console.log(orderId)
+
+            $.ajax({
+                type: 'POST',
+                url: '/order/finalize-order/',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'order_id': orderId
+                },
+                success: function(response) {
+                    alert('سفارش نهایی شد!');
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert('خطا در ارسال درخواست: ' + error);
+                }
+            });
+
+
+
+        });
+    });
+
+
+
+</script>
