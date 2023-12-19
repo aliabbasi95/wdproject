@@ -1,0 +1,59 @@
+
+
+{% block content %}
+    <h2>سبد خرید</h2>
+    <ul>
+        {% for book_cart in books_in_cart %}
+            <li>
+                {{ book_cart.book.title }}-{{ book_cart.book.price }}
+                <p>count : {{ book_cart.count }}</p>
+                <button class="remove-from-cart" data-book-id="{{ book_cart.book.id }}">حذف</button>
+            </li>
+        {% endfor %}
+
+    </ul>
+    <button id="finalize-cart">نهایی کردن سبد خرید</button>
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.remove-from-cart').click(function() {
+            var bookId = $(this).data('book-id');
+            $.ajax({
+                type: 'POST',
+                url: '/cart/remove-book/',
+                data: {
+                    'book_id': bookId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert('کتاب از سبد خرید حذف شد!');
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert('خطا در ارسال درخواست: ' + error);
+                }
+            });
+
+        });
+
+        $('#finalize-cart').click(function() {
+            $.ajax({
+                type: 'POST',
+                url: '/finalize-cart/',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    // انجام عملیاتی که بعد از نهایی کردن سبد خرید باید انجام شود
+                    alert('سبد خرید نهایی شد و سفارش ایجاد شد!');
+                },
+                error: function(xhr, status, error) {
+                    // پیام خطا در صورتی که درخواست با مشکل مواجه شود
+                    alert('خطا در ارسال درخواست: ' + error);
+                }
+            });
+        });
+    });
+</script>

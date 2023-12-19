@@ -5,11 +5,37 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>Books</h1>
     {% for book in books %}
-        <ul>
-            <li><a href="/product/books/{{ book.pk }}">ketab {{ book.title }} {{ book.year }}</a></li>
-        </ul>
-    {% endfor %}
+
+    <ul>
+        <li><a href="/books/{{book.pk}}/">{{book.title}} {{book.price}}</a></li>
+    </ul>
+        <button class="add-to-cart" data-book-id="{{ book.id }}">افزودن به سبد خرید</button>
+        {% endfor %}
+
 </body>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.add-to-cart').click(function() {
+            var bookId = $(this).data('book-id');
+            $.ajax({
+                type: 'POST',
+                url: '/cart/add-to-cart/',
+                data: {
+                    'book_id': bookId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert('کتاب به سبد خرید اضافه شد!');
+                },
+                error: function(xhr, status, error) {
+                    alert('خطا در ارسال درخواست: ' + error);
+                }
+            });
+        });
+    });
+</script>
 </html>
