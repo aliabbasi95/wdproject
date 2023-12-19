@@ -1,0 +1,6 @@
+<h3>ورود</h3>
+<form method="post" action="{% url 'signin' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" >ورود</button>
+</form>

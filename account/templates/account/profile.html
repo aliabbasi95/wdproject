@@ -1,0 +1,11 @@
+<h3>profile</h3>
+<form method="post" action="{% url 'profile' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">ثبت اطلاعات</button>
+</form>
+
+
+<form method="get" action="{% url 'logout' %}">
+    <button type="submit">خروج</button>
+</form>
